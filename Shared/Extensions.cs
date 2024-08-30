@@ -32,13 +32,11 @@ public static class Extensions
 
         if (page <= 0)
         {
-            page = 1;
             throw new ArgumentException($"{nameof(page)} must be greater than 0");
         }
 
         if (pageSize <= 0)
         {
-            pageSize = 10;
             throw new ArgumentException($"{nameof(pageSize)} must be greater than 0");
         }
 
@@ -48,12 +46,15 @@ public static class Extensions
         return source.Skip((page - 1) * pageSize).Take(pageSize);
 
     }
-    public static IEnumerable<T> WhereWithPaginate<T>(this IEnumerable<T> source, Func<T,bool>predicate, int page = 1, int pageSize = 10)
+    public static IEnumerable<T> WhereWithPaginate<T>(this IEnumerable<T> source, Func<T, bool> predicate, int page = 1, int pageSize = 10)
     {
         if (source == null)
             throw new ArgumentNullException($"{nameof(source)}");
 
-       var filtered = Enumerable.Where(source, predicate);
+        if (predicate == null)
+            throw new ArgumentNullException($"{nameof(predicate)}");
+
+        var filtered = Enumerable.Where(source, predicate);
 
         return paginate(filtered, page, pageSize);
 

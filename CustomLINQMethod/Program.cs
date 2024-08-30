@@ -21,7 +21,7 @@ namespace CustomLINQMethod
          
 
            var page1Filtered = employees.WhereWithPaginate(e => e.Salary > 1000, 1, 10);
-            page1Filtered.Print("Page 1 Filtered");
+            page1Filtered.Print("Page 1 Filtered With Salary > 1000");
             Console.ReadKey();
         }
          
